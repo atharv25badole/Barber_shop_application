@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'barberdb',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'HOST': 'mysql',
         'PORT': '3306',
     }
 }
