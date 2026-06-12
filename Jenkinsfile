@@ -15,6 +15,12 @@ pipeline {
             }
         }
 
+        stage('GitLeaks Scan') {
+            steps {
+                bat 'gitleaks detect --source . -v'
+            }
+        }
+
         stage('Build Backend Image') {
             steps {
                 bat 'docker build -t queue-backend ./backend'
