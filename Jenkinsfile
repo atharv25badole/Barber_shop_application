@@ -44,5 +44,36 @@ pipeline {
                 bat '"C:\\tools\\trivy\\trivy.exe" image queue-frontend'
             }
         }
+
+        stage('Docker Login') {
+           steps {
+               withCredentials([usernamePassword(
+               credentialsId: 'dockerhub-creds',
+               usernameVariable: 'DOCKER_USER',
+               passwordVariable: 'DOCKER_PASS'
+           )]) {
+             bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+             }
+          }
+       }
+       
+       stage('Tag Images') {
+           steps {
+               bat 'docker tag queue-backend atharvbadole/queue-backend:latest'
+               bat 'docker tag queue-frontend atharvbadole/queue-frontend:latest'
+           }
+       }
+
+       stage('Push Backend') {
+           steps {
+               bat 'docker push atharvbadole/queue-backend:latest'
+           }
+       }
+
+       stage('Push Frontend') {
+           steps {
+               bat 'docker push atharvbadole/queue-frontend:latest'
+           }
+       } 
     }
 }
