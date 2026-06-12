@@ -32,5 +32,17 @@ pipeline {
                 bat 'docker build -t queue-frontend ./frontend'
             }
         }
+        
+        stage('Trivy Backend Scan') {
+            steps {
+                bat '"C:\\tools\\trivy\\trivy.exe" image queue-backend'
+            }
+        }
+
+        stage('Trivy Frontend Scan') {
+            steps {
+                bat '"C:\\tools\\trivy\\trivy.exe" image queue-frontend'
+            }
+        }
     }
 }
